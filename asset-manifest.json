@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/BisBalance/static/css/main.71b9465b.css",
-    "main.js": "/BisBalance/static/js/main.ef6724e6.js",
-    "static/js/453.ed30a351.chunk.js": "/BisBalance/static/js/453.ed30a351.chunk.js",
+    "main.css": "/BisBalance/static/css/main.9c86a6f5.css",
+    "main.js": "/BisBalance/static/js/main.d1cd4628.js",
+    "static/js/453.671c1978.chunk.js": "/BisBalance/static/js/453.671c1978.chunk.js",
     "index.html": "/BisBalance/index.html",
-    "main.71b9465b.css.map": "/BisBalance/static/css/main.71b9465b.css.map",
-    "main.ef6724e6.js.map": "/BisBalance/static/js/main.ef6724e6.js.map",
-    "453.ed30a351.chunk.js.map": "/BisBalance/static/js/453.ed30a351.chunk.js.map"
+    "main.9c86a6f5.css.map": "/BisBalance/static/css/main.9c86a6f5.css.map",
+    "main.d1cd4628.js.map": "/BisBalance/static/js/main.d1cd4628.js.map",
+    "453.671c1978.chunk.js.map": "/BisBalance/static/js/453.671c1978.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.71b9465b.css",
-    "static/js/main.ef6724e6.js"
+    "static/css/main.9c86a6f5.css",
+    "static/js/main.d1cd4628.js"
   ]
 }
