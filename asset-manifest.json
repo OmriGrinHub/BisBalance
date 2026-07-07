@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/BisBalance/static/css/main.71b9465b.css",
+    "main.js": "/BisBalance/static/js/main.ef6724e6.js",
+    "static/js/453.ed30a351.chunk.js": "/BisBalance/static/js/453.ed30a351.chunk.js",
+    "index.html": "/BisBalance/index.html",
+    "main.71b9465b.css.map": "/BisBalance/static/css/main.71b9465b.css.map",
+    "main.ef6724e6.js.map": "/BisBalance/static/js/main.ef6724e6.js.map",
+    "453.ed30a351.chunk.js.map": "/BisBalance/static/js/453.ed30a351.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.71b9465b.css",
+    "static/js/main.ef6724e6.js"
+  ]
+}
