@@ -1,9 +1,9 @@
 {
   "short_name": "BisBalance",
-  "name": "BisBalance - מעקב יתרת Ten Bis",
+  "name": "BisBalance",
   "icons": [
     {
-      "src": "bisbalance_logo_v2.png",
+      "src": "bisbalance_logo.png",
       "type": "image/png",
       "sizes": "192x192"
     },
