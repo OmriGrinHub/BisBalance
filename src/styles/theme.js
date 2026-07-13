@@ -15,13 +15,27 @@ const createAppTheme = (mode = 'dark') => {
         light: '#7DCF7D',
         dark: '#3D8C3D',
         contrastText: '#fff',
+        lighter: isDark ? 'rgba(92, 184, 92, 0.15)' : 'rgba(92, 184, 92, 0.08)',
       },
       secondary: {
         main: '#2196F3',
         contrastText: '#fff',
       },
+      info: {
+        main: '#2196F3',
+        lighter: isDark ? 'rgba(33, 150, 243, 0.15)' : 'rgba(33, 150, 243, 0.08)',
+      },
+      success: {
+        main: '#4CAF50',
+        lighter: isDark ? 'rgba(76, 175, 80, 0.15)' : 'rgba(76, 175, 80, 0.08)',
+      },
+      error: {
+        main: '#F44336',
+        lighter: isDark ? 'rgba(244, 67, 54, 0.15)' : 'rgba(244, 67, 54, 0.08)',
+      },
       warning: {
         main: '#FF9800',
+        lighter: isDark ? 'rgba(255, 152, 0, 0.15)' : 'rgba(255, 152, 0, 0.08)',
       },
       background: {
         default: isDark ? '#121212' : '#F5F5F5',

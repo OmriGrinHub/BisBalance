@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   AppBar,
@@ -14,20 +14,29 @@ import {
   ListItemText,
   Switch,
   InputAdornment,
+  Alert,
+  Button,
   useTheme,
 } from '@mui/material';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import tenBisLogo from '../assets/tenbis-logo.png';
+import cibusLogo from '../assets/cibus-logo.webp';
 
 /**
  * Settings page — user can configure the daily office accumulation amount
  * and toggle between dark and light mode.
  */
-const SettingsPage = ({ settings, onUpdateDailyAmount, onToggleDarkMode }) => {
+const SettingsPage = ({ settings, onToggleDarkMode }) => {
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
+  const [showProMessage, setShowProMessage] = useState(false);
+
+  const handleProOnlyAttempt = () => {
+    setShowProMessage(true);
+  };
 
   const cardSx = {
     border: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.08)'}`,
@@ -35,6 +44,8 @@ const SettingsPage = ({ settings, onUpdateDailyAmount, onToggleDarkMode }) => {
       ? 'linear-gradient(145deg, #1E1E1E 0%, #252525 100%)'
       : 'linear-gradient(145deg, #FFFFFF 0%, #F9F9F9 100%)',
   };
+
+  const buttonLabelColor = isDark ? '#FFFFFF' : 'rgba(0,0,0,0.8)';
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
@@ -61,13 +72,19 @@ const SettingsPage = ({ settings, onUpdateDailyAmount, onToggleDarkMode }) => {
 
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
               <Typography variant="body2" color="text.secondary">
-                סכום צבירה יומי ממשרד
+                סכום צבירה יומי מהמשרד
               </Typography>
               <TextField
                 value={settings.dailyOfficeAmount}
-                onChange={(e) => onUpdateDailyAmount(e.target.value)}
+                onClick={handleProOnlyAttempt}
+                onFocus={handleProOnlyAttempt}
                 type="number"
-                inputProps={{ min: 0, step: 5, style: { fontWeight: 700, fontSize: '1.1rem' } }}
+                inputProps={{
+                  min: 0,
+                  step: 5,
+                  readOnly: true,
+                  style: { fontWeight: 700, fontSize: '1.1rem' },
+                }}
                 InputProps={{
                   startAdornment: <InputAdornment position="start">₪</InputAdornment>,
                 }}
@@ -78,6 +95,66 @@ const SettingsPage = ({ settings, onUpdateDailyAmount, onToggleDarkMode }) => {
               <Typography variant="caption" color="text.secondary">
                 שינוי ישפיע על כל החישובים אוטומטית
               </Typography>
+
+              <Box sx={{ mt: 1.5, display: 'flex', gap: 1 }}>
+                <Box sx={{ flex: 1 }} onClick={handleProOnlyAttempt}>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    disabled
+                    sx={{
+                      backgroundColor: '#008cff',
+                      color: buttonLabelColor,
+                      opacity: 0.6,
+                      fontWeight: 700,
+                      letterSpacing: '0.01em',
+                      '& .MuiButton-startIcon': {
+                        margin: 0,
+                        marginInlineEnd: '10px',
+                      },
+                      '&.Mui-disabled': {
+                        backgroundColor: 'rgba(255,152,0,0.5)',
+                        color: buttonLabelColor,
+                      },
+                    }}
+                    startIcon={<Box component="img" src={tenBisLogo} alt="Ten Bis" sx={{ width: 18, height: 18, borderRadius: '50%' }} />}
+                  >
+                    חיבור לתן ביס
+                  </Button>
+                </Box>
+
+                <Box sx={{ flex: 1 }} onClick={handleProOnlyAttempt}>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    disabled
+                    sx={{
+                      backgroundColor: '#B347A9',
+                      color: buttonLabelColor,
+                      opacity: 0.6,
+                      fontWeight: 700,
+                      letterSpacing: '0.01em',
+                      '& .MuiButton-startIcon': {
+                        margin: 0,
+                        marginInlineEnd: '10px',
+                      },
+                      '&.Mui-disabled': {
+                        backgroundColor: 'rgba(179,71,169,0.5)',
+                        color: buttonLabelColor,
+                      },
+                    }}
+                    startIcon={<Box component="img" src={cibusLogo} alt="Cibus" sx={{ width: 18, height: 18, borderRadius: '50%' }} />}
+                  >
+                    חיבור לסיבוס
+                  </Button>
+                </Box>
+              </Box>
+
+              {showProMessage && (
+                <Alert severity="info" sx={{ mt: 1, borderRadius: 2 }}>
+                  פעולה זו זמינה למשתמשי Pro בלבד.
+                </Alert>
+              )}
             </Box>
           </CardContent>
         </Card>
@@ -124,11 +201,13 @@ const SettingsPage = ({ settings, onUpdateDailyAmount, onToggleDarkMode }) => {
               </Typography>
             </Box>
             <Typography variant="body2" color="text.secondary" lineHeight={1.7}>
-              אפליקציית Bis Balance מאפשרת מעקב אחר צבירת הטבות כרטיס 10 Bis ומשיכות יתרה.
+              אפליקציית Bis Balance מאפשרת מעקב אחר צבירת הטבות כרטיס תן ביס / סיבוס ומשיכות יתרה. <br/>
+              פותח על ידי עמרי ג.
+              כל הזכויות שמורות ©
             </Typography>
             <Divider sx={{ my: 1.5 }} />
             <Typography variant="caption" color="text.secondary">
-              גרסה 1.0.0 · כל הנתונים שמורים מקומית
+              גרסה  0.1.3  כל הנתונים שמורים מקומית
             </Typography>
           </CardContent>
         </Card>

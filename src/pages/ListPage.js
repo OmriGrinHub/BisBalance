@@ -47,7 +47,7 @@ const ListPage = ({ days, settings, currentMonth }) => {
       <AppBar position="sticky" elevation={0}>
         <Toolbar sx={{ minHeight: 56 }}>
           <Typography variant="h6" sx={{ flex: 1, textAlign: 'center', fontWeight: 700, fontSize: '1.1rem' }}>
-            משיכת יתרה
+            תצוגת רשימה
           </Typography>
         </Toolbar>
       </AppBar>

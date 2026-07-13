@@ -6,13 +6,14 @@ import {
   Typography,
   IconButton,
 } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
 import BarChartIcon from '@mui/icons-material/BarChart';
+import InfoIcon from '@mui/icons-material/Info';
 import MonthSelector from '../components/MonthSelector';
 import CalendarGrid from '../components/CalendarGrid';
 import BalanceCard from '../components/BalanceCard';
 import WithdrawCard from '../components/WithdrawCard';
 import DayPopup from '../components/DayPopup';
+import InstructionsPopup from '../components/InstructionsPopup';
 import { getMonthDays, calculateMonthStats } from '../utils/calculations';
 import dayjs from 'dayjs';
 
@@ -31,6 +32,7 @@ const CalendarPage = ({
 }) => {
   const [selectedDateKey, setSelectedDateKey] = useState(null);
   const [popupOpen, setPopupOpen] = useState(false);
+  const [instructionsOpen, setInstructionsOpen] = useState(false);
 
   const { year, month } = currentMonth;
   const monthDays = getMonthDays(year, month);
@@ -51,8 +53,17 @@ const CalendarPage = ({
     setPopupOpen(false);
   };
 
+  const handleOpenInstructions = () => {
+    setInstructionsOpen(true);
+  };
+
+  const handleCloseInstructions = () => {
+    setInstructionsOpen(false);
+  };
+
   const handleWorkTypeChange = (dateKey, workType) => {
     onSetWorkType(dateKey, workType);
+    setPopupOpen(false);
   };
 
   return (
@@ -60,12 +71,18 @@ const CalendarPage = ({
       {/* App Bar */}
       <AppBar position="sticky" elevation={0}>
         <Toolbar sx={{ minHeight: 56, gap: 1 }}>
-          <IconButton edge="start" color="inherit" size="medium">
-            <MenuIcon />
+          <IconButton
+            edge="start"
+            color="inherit"
+            size="medium"
+            onClick={handleOpenInstructions}
+            title="הוראות שימוש"
+          >
+            <InfoIcon />
           </IconButton>
 
           <Typography variant="h6" sx={{ flex: 1, textAlign: 'center', fontWeight: 700, fontSize: '1.1rem' }}>
-            משיכת יתרה
+            לוח שנה
           </Typography>
 
           <IconButton edge="end" color="inherit" size="medium">
@@ -130,6 +147,12 @@ const CalendarPage = ({
         dailyOfficeAmount={settings.dailyOfficeAmount}
         onClose={handleClosePopup}
         onWorkTypeChange={handleWorkTypeChange}
+      />
+
+      {/* Instructions popup */}
+      <InstructionsPopup
+        open={instructionsOpen}
+        onClose={handleCloseInstructions}
       />
     </Box>
   );

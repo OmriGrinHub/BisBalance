@@ -84,7 +84,7 @@ const DayPopup = ({ open, dateKey, dayEntry, dailyOfficeAmount, onClose, onWorkT
           value={workType}
           exclusive
           onChange={(_, val) => {
-            if (val !== undefined) onWorkTypeChange(dateKey, val);
+            onWorkTypeChange(dateKey, val);
           }}
           fullWidth
           sx={{ mb: 2 }}

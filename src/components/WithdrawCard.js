@@ -41,7 +41,8 @@ const WithdrawCard = ({ selectedDate, onWithdraw }) => {
     if (errMsg) {
       setError(errMsg);
     } else {
-      setSuccess(`₪${amount} נמשכו בהצלחה`);
+      const parsedAmount = parseFloat(amount);
+      setSuccess(parsedAmount === 0 ? 'המשיכה בוטלה בהצלחה' : `₪${amount} נמשכו בהצלחה`);
       setAmount('');
       // Auto-clear success after 3s
       setTimeout(() => setSuccess(''), 3000);
