@@ -2,6 +2,23 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Security and public deployment notes
+
+- This app is frontend-only and code is public when deployed to GitHub Pages.
+- Do not commit passwords, private keys, or backend secrets to this repository.
+- Google Analytics is optional and loaded only when `REACT_APP_GA_MEASUREMENT_ID` is set.
+
+### Optional analytics setup
+
+1. Copy `.env.example` to `.env.local`.
+2. Set your value for `REACT_APP_GA_MEASUREMENT_ID`.
+
+### Quick pre-publish secret scan
+
+```bash
+grep -RInE "(password|passwd|secret|api[_-]?key|token|private[_-]?key|client[_-]?secret|authorization:|bearer )" .
+```
+
 ## Available Scripts
 
 In the project directory, you can run:
