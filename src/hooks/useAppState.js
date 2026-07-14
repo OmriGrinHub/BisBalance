@@ -1,25 +1,13 @@
 import { useState, useEffect, useCallback } from 'react';
 import dayjs from 'dayjs';
 import { loadState, saveState } from '../services/storageService';
-import { generateSampleData } from '../utils/calculations';
 import { MAX_WITHDRAWAL, MIN_WITHDRAWAL } from '../models/types';
 /**
  * Central state management hook for the Bis Balance app.
  * Handles all business logic and localStorage persistence.
  */
 const useAppState = () => {
-  const [state, setState] = useState(() => {
-    const loaded = loadState();
-    // If no days exist, seed with sample data for the current month
-    if (Object.keys(loaded.days).length === 0) {
-      const now = dayjs();
-      loaded.days = generateSampleData(
-        now.year(),
-        now.month()
-      );
-    }
-    return loaded;
-  });
+  const [state, setState] = useState(() => loadState());
 
   const [currentMonth, setCurrentMonth] = useState(() => ({
     year: dayjs().year(),
