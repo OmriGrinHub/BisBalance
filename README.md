@@ -13,12 +13,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 1. Copy `.env.example` to `.env.local`.
 2. Set your value for `REACT_APP_GA_MEASUREMENT_ID`.
 
-### Quick pre-publish secret scan
-
-```bash
-grep -RInE "(password|passwd|secret|api[_-]?key|token|private[_-]?key|client[_-]?secret|authorization:|bearer )" .
-```
-
 ## Available Scripts
 
 In the project directory, you can run:
