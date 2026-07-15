@@ -12,7 +12,7 @@ const DAY_LABELS = ['א׳', 'ב׳', 'ג׳', 'ד׳', 'ה׳', 'ו׳', 'ש׳'];
  * Renders all days of the month with work type indicators and withdrawal dots.
  * Days are clickable for the popup.
  */
-const LONG_PRESS_MS = 500;
+const LONG_PRESS_MS = 350;
 
 const CalendarGrid = ({
   year,
