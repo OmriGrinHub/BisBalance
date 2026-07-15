@@ -47,31 +47,27 @@ const InstructionsPopup = ({ open, onClose }) => {
       </DialogTitle>
 
       <DialogContent sx={{ pt: 2, pb: 2, maxHeight: 'calc(90vh - 140px)', overflowY: 'auto' }}>
-        {/* Example data note */}
-        <Typography
-          variant="caption"
-          sx={{
-            display: 'block',
-            backgroundColor: 'warning.lighter' || 'rgba(255, 152, 0, 0.1)',
-            p: 1,
-            borderRadius: 1,
-            mb: 2,
-            textAlign: 'center',
-            fontWeight: 600,
-            color: 'text.primary',
-          }}
-        >
-          ⚠️ הנתונים המוצגים הם לצורך דוגמה
-        </Typography>
-
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           {/* Section 1 */}
           <Box>
             <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5 }}>
-              1️⃣ בחירת יום
+              1️⃣ בחירת יום לעריכה
             </Typography>
-            <Typography variant="body2" sx={{ color: 'text.secondary', mb: 1 }}>
-              לוחצים על יום בלוח השנה
+            <Typography variant="body2" sx={{ color: 'text.secondary', mb: 0.5 }}>
+              לוחצים על יום בלוח השנה — יפתח חלון לבחירת סוג עבודה
+            </Typography>
+            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+              בחירת סוג עבודה בחלון גם מעדכנת את תאריך המשיכה למטה ל<strong>אותו יום</strong> (טבעת 🟠 כתומה)
+            </Typography>
+          </Box>
+
+          {/* Section 1b */}
+          <Box sx={{ backgroundColor: 'rgba(255,152,0,0.08)', p: 1.5, borderRadius: 1 }}>
+            <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5 }}>
+              👆 לחיצה ארוכה — בחירת יום למשיכה
+            </Typography>
+            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+              לחיצה ארוכה (חצי שנייה) על יום <strong>מגדירה אותו כיום המשיכה</strong> מבלי לפתוח חלון עריכה — מסומן בטבעת כתומה 🟠
             </Typography>
           </Box>
 
@@ -104,7 +100,7 @@ const InstructionsPopup = ({ open, onClose }) => {
               4️⃣ משיכת יתרה
             </Typography>
             <Typography variant="body2" sx={{ color: 'text.secondary', mb: 1 }}>
-              בחרו יום ורשמו כמה משכתם. היתרה תתעדכן בהתאם.
+              בחרו יום (לחיצה רגילה או ארוכה) ורשמו כמה משכתם. היתרה תתעדכן בהתאם.
             </Typography>
             <Typography variant="caption" sx={{ color: 'error.main' }}>
               ⚠️ אם משכתם יותר מהיתרה, היתרה תהיה שלילית

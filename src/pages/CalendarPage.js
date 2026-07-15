@@ -49,6 +49,10 @@ const CalendarPage = ({
     setPopupOpen(true);
   };
 
+  const handleDayLongPress = (dateKey) => {
+    setSelectedDateKey(dateKey);
+  };
+
   const handleClosePopup = () => {
     setPopupOpen(false);
   };
@@ -67,9 +71,9 @@ const CalendarPage = ({
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden' }}>
       {/* App Bar */}
-      <AppBar position="sticky" elevation={0}>
+      <AppBar position="static" elevation={0}>
         <Toolbar sx={{ minHeight: 56, gap: 1 }}>
           <IconButton
             edge="start"
@@ -85,7 +89,8 @@ const CalendarPage = ({
             לוח שנה
           </Typography>
 
-          <IconButton edge="end" color="inherit" size="medium">
+          {/* Chart button — hidden until analytics feature is ready */}
+          <IconButton edge="end" color="inherit" size="medium" sx={{ visibility: 'hidden' }}>
             <BarChartIcon />
           </IconButton>
         </Toolbar>
@@ -125,7 +130,9 @@ const CalendarPage = ({
             year={year}
             month={month}
             days={days}
+            selectedDateKey={selectedDateKey}
             onDayClick={handleDayClick}
+            onDayLongPress={handleDayLongPress}
           />
         </Box>
 

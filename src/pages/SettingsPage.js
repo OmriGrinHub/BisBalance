@@ -48,11 +48,11 @@ const SettingsPage = ({ settings, onToggleDarkMode }) => {
   const buttonLabelColor = isDark ? '#FFFFFF' : 'rgba(0,0,0,0.8)';
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden' }}>
       {/* App Bar */}
-      <AppBar position="sticky" elevation={0}>
-        <Toolbar sx={{ minHeight: 56 }}>
-          <Typography variant="h6" sx={{ flex: 1, textAlign: 'center', fontWeight: 700, fontSize: '1.1rem' }}>
+      <AppBar position="static" elevation={0}>
+        <Toolbar sx={{ minHeight: 56, position: 'relative' }}>
+          <Typography variant="h6" sx={{ position: 'absolute', left: 0, right: 0, textAlign: 'center', fontWeight: 700, fontSize: '1.1rem', pointerEvents: 'none' }}>
             אזור אישי
           </Typography>
         </Toolbar>

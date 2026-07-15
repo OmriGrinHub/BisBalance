@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { Box, Typography, useTheme } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import BusinessIcon from '@mui/icons-material/Business';
@@ -12,8 +12,19 @@ const DAY_LABELS = ['א׳', 'ב׳', 'ג׳', 'ד׳', 'ה׳', 'ו׳', 'ש׳'];
  * Renders all days of the month with work type indicators and withdrawal dots.
  * Days are clickable for the popup.
  */
-const CalendarGrid = ({ year, month, days, onDayClick }) => {
+const LONG_PRESS_MS = 500;
+
+const CalendarGrid = ({
+  year,
+  month,
+  days,
+  onDayClick,
+  onDayLongPress,
+  selectedDateKey,
+}) => {
   const theme = useTheme();
+  const longPressTimerRef = useRef(null);
+  const longPressTriggeredRef = useRef(false);
 
   const startOfMonth = dayjs().year(year).month(month).startOf('month');
   const daysInMonth = startOfMonth.daysInMonth();
@@ -21,6 +32,27 @@ const CalendarGrid = ({ year, month, days, onDayClick }) => {
   const firstDayOfWeek = startOfMonth.day(); // 0=Sun
 
   const today = dayjs().format('YYYY-MM-DD');
+
+  const clearLongPressTimer = useCallback(() => {
+    if (longPressTimerRef.current) {
+      clearTimeout(longPressTimerRef.current);
+      longPressTimerRef.current = null;
+    }
+  }, []);
+
+  const startLongPress = useCallback((dateKey) => {
+    longPressTriggeredRef.current = false;
+    clearLongPressTimer();
+
+    longPressTimerRef.current = setTimeout(() => {
+      longPressTriggeredRef.current = true;
+      onDayLongPress?.(dateKey);
+    }, LONG_PRESS_MS);
+  }, [clearLongPressTimer, onDayLongPress]);
+
+  const endLongPress = useCallback(() => {
+    clearLongPressTimer();
+  }, [clearLongPressTimer]);
 
   // Build the grid cells (empty prefix + day cells)
   const cells = Array.from({ length: firstDayOfWeek }, () => null).concat(
@@ -32,13 +64,27 @@ const CalendarGrid = ({ year, month, days, onDayClick }) => {
       const dateKey = startOfMonth.date(dayNum).format('YYYY-MM-DD');
       const entry = days[dateKey];
       const isToday = dateKey === today;
+      const isSelected = selectedDateKey === dateKey;
       const hasWithdrawal = entry && entry.withdrawal > 0;
       const workType = entry?.workType || null;
 
       return (
         <Box
           key={dateKey}
-          onClick={() => onDayClick(dateKey)}
+          onClick={() => {
+            if (longPressTriggeredRef.current) {
+              longPressTriggeredRef.current = false;
+              return;
+            }
+            onDayClick(dateKey);
+          }}
+          onMouseDown={() => startLongPress(dateKey)}
+          onMouseUp={endLongPress}
+          onMouseLeave={endLongPress}
+          onTouchStart={() => startLongPress(dateKey)}
+          onTouchEnd={endLongPress}
+          onTouchCancel={endLongPress}
+          onContextMenu={(e) => e.preventDefault()}
           sx={{
             position: 'relative',
             display: 'flex',
@@ -49,7 +95,9 @@ const CalendarGrid = ({ year, month, days, onDayClick }) => {
             borderRadius: '50%',
             cursor: 'pointer',
             userSelect: 'none',
-            border: isToday
+            border: isSelected
+              ? '2px solid #FF9800'
+              : isToday
               ? `2px solid ${theme.palette.primary.main}`
               : '2px solid transparent',
             backgroundColor: workType
@@ -120,7 +168,7 @@ const CalendarGrid = ({ year, month, days, onDayClick }) => {
         </Box>
       );
     },
-    [days, today, startOfMonth, theme, onDayClick]
+    [days, today, startOfMonth, theme, onDayClick, startLongPress, endLongPress, selectedDateKey]
   );
 
   return (

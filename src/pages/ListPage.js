@@ -42,25 +42,25 @@ const ListPage = ({ days, settings, currentMonth }) => {
   );
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden' }}>
       {/* App Bar */}
-      <AppBar position="sticky" elevation={0}>
-        <Toolbar sx={{ minHeight: 56 }}>
-          <Typography variant="h6" sx={{ flex: 1, textAlign: 'center', fontWeight: 700, fontSize: '1.1rem' }}>
+      <AppBar position="static" elevation={0}>
+        <Toolbar sx={{ minHeight: 56, position: 'relative' }}>
+          <Typography variant="h6" sx={{ position: 'absolute', left: 0, right: 0, textAlign: 'center', fontWeight: 700, fontSize: '1.1rem', pointerEvents: 'none' }}>
             תצוגת רשימה
           </Typography>
         </Toolbar>
       </AppBar>
 
       {/* Month label */}
-      <Box sx={{ px: 2, pt: 1.5, pb: 0.5 }}>
+      <Box sx={{ width: '100%', pt: 1.5, pb: 0.5, textAlign: 'center' }}>
         <Typography variant="body2" color="text.secondary" fontWeight={500}>
           {MONTH_NAMES_HE[month]} {year}
         </Typography>
       </Box>
 
       {/* Scrollable table */}
-      <Box sx={{ flex: 1, overflowY: 'auto', px: 1 }}>
+      <Box sx={{ flex: 1, overflowY: 'auto', px: 1, pt: 0.5 }}>
         <TableContainer
           sx={{
             borderRadius: 3,
@@ -69,7 +69,7 @@ const ListPage = ({ days, settings, currentMonth }) => {
             mb: 2,
           }}
         >
-          <Table size="small" stickyHeader>
+          <Table size="small">
             <TableHead>
               <TableRow>
                 {['תאריך', 'סוג', 'צבירה', 'משיכה', 'יתרה'].map((h) => (

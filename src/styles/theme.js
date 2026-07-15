@@ -122,6 +122,7 @@ const createAppTheme = (mode = 'dark') => {
           root: {
             backgroundColor: isDark ? '#1A1A1A' : '#FFFFFF',
             backgroundImage: 'none',
+            color: isDark ? '#FFFFFF' : '#1A1A1A',
             boxShadow: isDark
               ? '0 2px 8px rgba(0,0,0,0.4)'
               : '0 2px 8px rgba(0,0,0,0.08)',
