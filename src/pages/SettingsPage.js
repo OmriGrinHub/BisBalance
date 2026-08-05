@@ -24,6 +24,7 @@ import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import tenBisLogo from '../assets/tenbis-logo.png';
 import cibusLogo from '../assets/cibus-logo.webp';
+import { trackEvent } from '../services/analyticsService';
 
 /**
  * Settings page — user can configure the daily office accumulation amount
@@ -34,7 +35,13 @@ const SettingsPage = ({ settings, onToggleDarkMode }) => {
   const isDark = theme.palette.mode === 'dark';
   const [showProMessage, setShowProMessage] = useState(false);
 
-  const handleProOnlyAttempt = () => {
+  const handleProOnlyAttempt = (buttonName) => {
+    if (typeof buttonName === 'string') {
+      trackEvent('button_click', {
+        button_name: buttonName,
+        page: 'settings',
+      });
+    }
     setShowProMessage(true);
   };
 
@@ -97,7 +104,7 @@ const SettingsPage = ({ settings, onToggleDarkMode }) => {
               </Typography>
 
               <Box sx={{ mt: 1.5, display: 'flex', gap: 1 }}>
-                <Box sx={{ flex: 1 }} onClick={handleProOnlyAttempt}>
+                <Box sx={{ flex: 1 }} onClick={() => handleProOnlyAttempt('connect_tenbis')}>
                   <Button
                     fullWidth
                     variant="contained"
@@ -123,7 +130,7 @@ const SettingsPage = ({ settings, onToggleDarkMode }) => {
                   </Button>
                 </Box>
 
-                <Box sx={{ flex: 1 }} onClick={handleProOnlyAttempt}>
+                <Box sx={{ flex: 1 }} onClick={() => handleProOnlyAttempt('connect_cibus')}>
                   <Button
                     fullWidth
                     variant="contained"
@@ -207,7 +214,7 @@ const SettingsPage = ({ settings, onToggleDarkMode }) => {
             </Typography>
             <Divider sx={{ my: 1.5 }} />
             <Typography variant="caption" color="text.secondary">
-              גרסה  0.1.3  כל הנתונים שמורים מקומית
+              גרסה  0.1.4  כל הנתונים שמורים מקומית
             </Typography>
           </CardContent>
         </Card>

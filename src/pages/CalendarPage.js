@@ -16,6 +16,7 @@ import DayPopup from '../components/DayPopup';
 import InstructionsPopup from '../components/InstructionsPopup';
 import { getMonthDays, calculateMonthStats } from '../utils/calculations';
 import dayjs from 'dayjs';
+import { trackEvent } from '../services/analyticsService';
 
 /**
  * Calendar page - main page of the application.
@@ -58,6 +59,10 @@ const CalendarPage = ({
   };
 
   const handleOpenInstructions = () => {
+    trackEvent('button_click', {
+      button_name: 'instructions',
+      page: 'calendar',
+    });
     setInstructionsOpen(true);
   };
 

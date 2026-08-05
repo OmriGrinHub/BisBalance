@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 import dayjs from 'dayjs';
+import { trackEvent } from '../services/analyticsService';
 
 /**
  * Withdrawal card — lets the user enter an amount and withdraw it
@@ -58,6 +59,14 @@ const WithdrawCard = ({ selectedDate, onWithdraw }) => {
     }
   };
 
+  const handleWithdrawButtonClick = () => {
+    trackEvent('button_click', {
+      button_name: 'withdraw',
+      page: 'calendar',
+    });
+    handleWithdraw();
+  };
+
   return (
     <Card
       sx={{
@@ -97,7 +106,7 @@ const WithdrawCard = ({ selectedDate, onWithdraw }) => {
           <Button
             variant="contained"
             color="warning"
-            onClick={handleWithdraw}
+            onClick={handleWithdrawButtonClick}
             sx={{
               minWidth: 56,
               height: 40,
