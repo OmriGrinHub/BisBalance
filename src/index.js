@@ -21,3 +21,11 @@ initAnalytics().catch((error) => {
   console.warn('Analytics disabled:', error.message);
 });
 
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register(`${process.env.PUBLIC_URL || ''}/sw.js`).catch((error) => {
+      console.warn('Service worker registration failed:', error);
+    });
+  });
+}
+

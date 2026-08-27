@@ -306,7 +306,7 @@ const SettingsPage = ({
             </Typography>
             <Divider sx={{ my: 1.5 }} />
             <Typography variant="caption" color="text.secondary">
-              גרסה 0.2.0 כל הנתונים שמורים מקומית
+              גרסה 0.2.1 כל הנתונים שמורים מקומית
             </Typography>
           </CardContent>
         </Card>

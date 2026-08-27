@@ -1,6 +1,7 @@
 import {
   shouldNotifyOnBalanceThresholdCrossing,
   buildBalanceNotificationOptions,
+  showBalanceNotification,
 } from './notificationService';
 
 describe('notificationService', () => {
@@ -18,5 +19,35 @@ describe('notificationService', () => {
     expect(options.title).toBe('BisBalance');
     expect(options.body).toContain('₪175');
     expect(options.body).toContain('₪150');
+    expect(options.requireInteraction).toBe(true);
+    expect(options.data.url).toContain(window.location.href);
+  });
+
+  test('falls back to direct notification when service worker is unavailable', async () => {
+    const originalServiceWorker = navigator.serviceWorker;
+    const originalNotification = window.Notification;
+    const showNotification = jest.fn().mockResolvedValue(undefined);
+    const directNotification = jest.fn();
+
+    Object.defineProperty(navigator, 'serviceWorker', {
+      configurable: true,
+      value: undefined,
+    });
+
+    window.Notification = Object.assign(jest.fn(), { permission: 'granted' });
+    window.Notification = directNotification;
+    window.Notification.permission = 'granted';
+
+    const result = await showBalanceNotification(175, 150);
+
+    expect(result).toBe(true);
+    expect(directNotification).toHaveBeenCalled();
+
+    Object.defineProperty(navigator, 'serviceWorker', {
+      configurable: true,
+      value: originalServiceWorker,
+    });
+    window.Notification = originalNotification;
+    void showNotification;
   });
 });
