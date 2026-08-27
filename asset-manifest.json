@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/BisBalance/static/css/main.9c86a6f5.css",
-    "main.js": "/BisBalance/static/js/main.d8c0175b.js",
+    "main.js": "/BisBalance/static/js/main.fc35eb4a.js",
     "static/js/453.671c1978.chunk.js": "/BisBalance/static/js/453.671c1978.chunk.js",
     "static/media/cibus-logo.webp": "/BisBalance/static/media/cibus-logo.eb96a27cac51bb5824d8.webp",
     "index.html": "/BisBalance/index.html",
     "main.9c86a6f5.css.map": "/BisBalance/static/css/main.9c86a6f5.css.map",
-    "main.d8c0175b.js.map": "/BisBalance/static/js/main.d8c0175b.js.map",
+    "main.fc35eb4a.js.map": "/BisBalance/static/js/main.fc35eb4a.js.map",
     "453.671c1978.chunk.js.map": "/BisBalance/static/js/453.671c1978.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.9c86a6f5.css",
-    "static/js/main.d8c0175b.js"
+    "static/js/main.fc35eb4a.js"
   ]
 }
