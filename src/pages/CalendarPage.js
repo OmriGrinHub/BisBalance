@@ -6,8 +6,8 @@ import {
   Typography,
   IconButton,
 } from '@mui/material';
-import BarChartIcon from '@mui/icons-material/BarChart';
 import InfoIcon from '@mui/icons-material/Info';
+import ShareIcon from '@mui/icons-material/Share';
 import MonthSelector from '../components/MonthSelector';
 import CalendarGrid from '../components/CalendarGrid';
 import BalanceCard from '../components/BalanceCard';
@@ -70,6 +70,38 @@ const CalendarPage = ({
     setInstructionsOpen(false);
   };
 
+  const handleShareWebsite = async () => {
+    const url = window.location.href;
+
+    trackEvent('button_click', {
+      button_name: 'share_website',
+      page: 'calendar',
+    });
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'BisBalance',
+          text: 'BisBalance - אשמח לשתף אותך באפליקציה מצוינת למעקב יתרת ההסעדה ',
+          url,
+        });
+        return;
+      } catch (error) {
+        if (error?.name === 'AbortError') {
+          return;
+        }
+      }
+    }
+
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(url);
+      window.alert('הקישור הועתק ללוח');
+      return;
+    }
+
+    window.prompt('העתיקו את הקישור:', url);
+  };
+
   const handleWorkTypeChange = (dateKey, workType) => {
     onSetWorkType(dateKey, workType);
     setPopupOpen(false);
@@ -94,9 +126,14 @@ const CalendarPage = ({
             לוח שנה
           </Typography>
 
-          {/* Chart button — hidden until analytics feature is ready */}
-          <IconButton edge="end" color="inherit" size="medium" sx={{ visibility: 'hidden' }}>
-            <BarChartIcon />
+          <IconButton
+            edge="end"
+            color="inherit"
+            size="medium"
+            onClick={handleShareWebsite}
+            title="שיתוף האתר"
+          >
+            <ShareIcon />
           </IconButton>
         </Toolbar>
       </AppBar>
