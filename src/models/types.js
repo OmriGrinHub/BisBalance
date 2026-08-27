@@ -12,6 +12,8 @@
  * AppSettings:
  * {
  *   dailyOfficeAmount: number,  // default 60
+ *   balanceNotificationsEnabled: boolean,
+ *   balanceNotificationThreshold: number,
  * }
  *
  * AppState (persisted to localStorage):
@@ -27,6 +29,7 @@ export const WORK_TYPES = {
 };
 
 export const DEFAULT_DAILY_OFFICE_AMOUNT = 60;
+export const DEFAULT_BALANCE_NOTIFICATION_THRESHOLD = 150;
 export const MAX_WITHDRAWAL = 150;
 export const MIN_WITHDRAWAL = 1;
 

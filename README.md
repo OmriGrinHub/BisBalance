@@ -7,6 +7,13 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - This app is frontend-only and code is public when deployed to GitHub Pages.
 - Do not commit passwords, private keys, or backend secrets to this repository.
 - Google Analytics is optional and loaded only when `REACT_APP_GA_MEASUREMENT_ID` is set.
+- Balance notifications are browser/PWA notifications only. They require user permission and do not use a backend push service.
+
+## Balance notification feature
+
+- Open `הגדרות` and enable `התראות יתרה`.
+- Set the threshold (default: `₪150`).
+- The app will notify when the balance crosses the threshold from below to above while the PWA/browser is available.
 
 ### Optional analytics setup
 

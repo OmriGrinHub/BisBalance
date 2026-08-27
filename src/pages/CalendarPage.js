@@ -126,9 +126,9 @@ const CalendarPage = ({
         <Box
           sx={{
             backgroundColor: 'background.paper',
-            borderRadius: 4,
+            borderRadius: 1.5,
             py: 1.5,
-            boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
+            boxShadow: '0 4px 15px rgba(0,0,0,0.4)',
           }}
         >
           <CalendarGrid
@@ -156,7 +156,6 @@ const CalendarPage = ({
         open={popupOpen}
         dateKey={selectedDateKey}
         dayEntry={selectedDateKey ? days[selectedDateKey] : null}
-        dailyOfficeAmount={settings.dailyOfficeAmount}
         onClose={handleClosePopup}
         onWorkTypeChange={handleWorkTypeChange}
       />

@@ -21,16 +21,24 @@ import {
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import tenBisLogo from '../assets/tenbis-logo.png';
 import cibusLogo from '../assets/cibus-logo.webp';
 import { trackEvent } from '../services/analyticsService';
+import { exportToCsv } from '../utils/calculations';
 
 /**
  * Settings page — user can configure the daily office accumulation amount
  * and toggle between dark and light mode.
  */
-const SettingsPage = ({ settings, onToggleDarkMode }) => {
+const SettingsPage = ({
+  days,
+  settings,
+  onToggleDarkMode,
+  onToggleBalanceNotifications,
+  onUpdateBalanceNotificationThreshold,
+}) => {
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
   const [showProMessage, setShowProMessage] = useState(false);
@@ -53,6 +61,14 @@ const SettingsPage = ({ settings, onToggleDarkMode }) => {
   };
 
   const buttonLabelColor = isDark ? '#FFFFFF' : 'rgba(0,0,0,0.8)';
+
+  const handleExportData = () => {
+    trackEvent('button_click', {
+      button_name: 'export_data',
+      page: 'settings',
+    });
+    exportToCsv(days, settings.dailyOfficeAmount);
+  };
 
   return (
      <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden' }}>
@@ -198,6 +214,82 @@ const SettingsPage = ({ settings, onToggleDarkMode }) => {
           </CardContent>
         </Card>
 
+        {/* Notification card */}
+        <Card sx={cardSx}>
+          <CardContent sx={{ p: 2.5, '&:last-child': { pb: 2.5 } }}>
+            <Typography variant="subtitle1" fontWeight={700} sx={{ mb: 1.5 }}>
+              התראות יתרה
+            </Typography>
+
+            <List disablePadding>
+              <ListItem disablePadding sx={{ py: 0.5, alignItems: 'flex-start' }}>
+                <ListItemIcon sx={{ minWidth: 36, mt: 0.2 }}>
+                  <NotificationsActiveIcon sx={{ color: '#5CB85C', fontSize: 22 }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="הפעל התראה כשהיתרה עוברת את הסף"
+                  secondary="כדי לקבל התראה צריך לאשר הרשאת התראות במכשיר."
+                  primaryTypographyProps={{ variant: 'body2', fontWeight: 500 }}
+                  secondaryTypographyProps={{ variant: 'caption', color: 'text.secondary' }}
+                />
+                <Switch
+                  checked={Boolean(settings.balanceNotificationsEnabled)}
+                  onChange={(_, checked) => onToggleBalanceNotifications(checked)}
+                  size="small"
+                  color="primary"
+                />
+              </ListItem>
+            </List>
+
+            <Box sx={{ mt: 1.5, display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+              <Typography variant="body2" color="text.secondary">
+                סף התראה (₪)
+              </Typography>
+              <TextField
+                value={settings.balanceNotificationThreshold}
+                onChange={(e) => onUpdateBalanceNotificationThreshold(e.target.value)}
+                type="number"
+                inputProps={{
+                  min: 0,
+                  step: 10,
+                  style: { fontWeight: 700, fontSize: '1.1rem' },
+                }}
+                InputProps={{
+                  startAdornment: <InputAdornment position="start">₪</InputAdornment>,
+                }}
+                size="small"
+                variant="outlined"
+                sx={{ maxWidth: 160 }}
+              />
+              <Typography variant="caption" color="text.secondary">
+                ברירת המחדל היא ₪150. ההודעה תישלח רק כשהיתרה תעבור את הסף מלמטה למעלה.
+              </Typography>
+            </Box>
+          </CardContent>
+        </Card>
+
+        <Card sx={cardSx}>
+          <CardContent sx={{ p: 2.5, '&:last-child': { pb: 2.5 } }}>
+            <Typography variant="subtitle1" fontWeight={700} sx={{ mb: 1.5 }}>
+              ייצוא נתונים
+            </Typography>
+
+            <Button
+              fullWidth
+              variant="outlined"
+              onClick={handleExportData}
+              sx={{
+                borderRadius: 2,
+                py: 1.1,
+                fontWeight: 700,
+                backgroundColor: isDark ? 'rgba(255,255,255,0.03)' : '#FFFFFF',
+              }}
+            >
+              ייצוא הנתונים
+            </Button>
+          </CardContent>
+        </Card>
+
         {/* Info card */}
         <Card sx={cardSx}>
           <CardContent sx={{ p: 2.5, '&:last-child': { pb: 2.5 } }}>
@@ -214,7 +306,7 @@ const SettingsPage = ({ settings, onToggleDarkMode }) => {
             </Typography>
             <Divider sx={{ my: 1.5 }} />
             <Typography variant="caption" color="text.secondary">
-              גרסה  0.1.4  כל הנתונים שמורים מקומית
+              גרסה 0.2.0 כל הנתונים שמורים מקומית
             </Typography>
           </CardContent>
         </Card>

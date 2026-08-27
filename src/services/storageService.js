@@ -1,4 +1,19 @@
-import { STORAGE_KEY, DEFAULT_DAILY_OFFICE_AMOUNT } from '../models/types';
+import { STORAGE_KEY, DEFAULT_DAILY_OFFICE_AMOUNT, DEFAULT_BALANCE_NOTIFICATION_THRESHOLD } from '../models/types';
+
+const getDefaultSettings = () => ({
+  dailyOfficeAmount: DEFAULT_DAILY_OFFICE_AMOUNT,
+  darkMode: true,
+  balanceNotificationsEnabled: false,
+  balanceNotificationThreshold: DEFAULT_BALANCE_NOTIFICATION_THRESHOLD,
+});
+
+const normalizeState = (state) => ({
+  days: state && typeof state.days === 'object' ? state.days : {},
+  settings: {
+    ...getDefaultSettings(),
+    ...(state && typeof state.settings === 'object' ? state.settings : {}),
+  },
+});
 
 /**
  * Load persisted app state from localStorage.
@@ -8,7 +23,7 @@ export const loadState = () => {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return getDefaultState();
-    return JSON.parse(raw);
+    return normalizeState(JSON.parse(raw));
   } catch {
     return getDefaultState();
   }
@@ -30,9 +45,6 @@ export const saveState = (state) => {
  */
 export const getDefaultState = () => ({
   days: {},
-  settings: {
-    dailyOfficeAmount: DEFAULT_DAILY_OFFICE_AMOUNT,
-    darkMode: true,
-  },
+  settings: getDefaultSettings(),
 });
 

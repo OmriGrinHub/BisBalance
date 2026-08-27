@@ -17,7 +17,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import dayjs from 'dayjs';
 import { WORK_TYPES } from '../models/types';
-import { getDayAccumulation } from '../utils/calculations';
 
 const MONTH_NAMES_HE = [
   'ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני',
@@ -28,7 +27,7 @@ const MONTH_NAMES_HE = [
  * Popup dialog shown when a calendar day is clicked.
  * Displays date info, work type selector, accumulation, and withdrawal status.
  */
-const DayPopup = ({ open, dateKey, dayEntry, dailyOfficeAmount, onClose, onWorkTypeChange }) => {
+const DayPopup = ({ open, dateKey, dayEntry, onClose, onWorkTypeChange }) => {
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
   if (!dateKey) return null;
@@ -36,7 +35,6 @@ const DayPopup = ({ open, dateKey, dayEntry, dailyOfficeAmount, onClose, onWorkT
   const date = dayjs(dateKey);
   const workType = dayEntry?.workType || null;
   const withdrawal = dayEntry?.withdrawal || 0;
-  const accumulation = getDayAccumulation(dayEntry, dailyOfficeAmount);
 
   const formattedDate = `${date.date()} ${MONTH_NAMES_HE[date.month()]} ${date.year()}`;
 
@@ -54,8 +52,9 @@ const DayPopup = ({ open, dateKey, dayEntry, dailyOfficeAmount, onClose, onWorkT
         sx: {
           borderRadius: 3,
           background: isDark ? '#252525' : '#FFFFFF',
-          minWidth: 280,
-          maxWidth: 340,
+          width: 'calc(100% - 32px)',
+          minWidth: 300,
+          maxWidth: 360,
           mx: 2,
         },
       }}
@@ -63,7 +62,7 @@ const DayPopup = ({ open, dateKey, dayEntry, dailyOfficeAmount, onClose, onWorkT
         style: { animation: 'fadeIn 0.2s ease' },
       }}
     >
-      <DialogContent sx={{ p: 2.5 }}>
+      <DialogContent sx={{ p: 2.5, direction: 'rtl' }}>
         {/* Header */}
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
           <Typography variant="subtitle1" fontWeight={700} color="text.primary">
@@ -87,13 +86,36 @@ const DayPopup = ({ open, dateKey, dayEntry, dailyOfficeAmount, onClose, onWorkT
             onWorkTypeChange(dateKey, val);
           }}
           fullWidth
-          sx={{ mb: 2 }}
+          sx={{
+            mb: 2,
+            width: '100%',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+            gap: 1,
+            '& .MuiToggleButtonGroup-grouped': {
+              border: `1px solid ${theme.palette.divider} !important`,
+              borderRadius: '10px !important',
+              justifyContent: 'center',
+              alignItems: 'center',
+              minWidth: 0,
+              px: 1.5,
+              py: 1,
+              gap: 0.75,
+              overflow: 'visible',
+            },
+            '& .MuiToggleButtonGroup-grouped:not(:first-of-type)': {
+              margin: 0,
+              borderLeft: `1px solid ${theme.palette.divider} !important`,
+            },
+            '& .MuiToggleButtonGroup-grouped:not(:last-of-type)': {
+              borderRight: `1px solid ${theme.palette.divider} !important`,
+            },
+          }}
         >
           <ToggleButton
             value={WORK_TYPES.HOME}
             sx={{
-              borderRadius: '10px !important',
-              gap: 0.5,
+              whiteSpace: 'nowrap',
               '&.Mui-selected': {
                 backgroundColor: 'rgba(92,184,92,0.2)',
                 color: '#5CB85C',
@@ -107,9 +129,7 @@ const DayPopup = ({ open, dateKey, dayEntry, dailyOfficeAmount, onClose, onWorkT
           <ToggleButton
             value={WORK_TYPES.OFFICE}
             sx={{
-              borderRadius: '10px !important',
-              gap: 0.5,
-              mx: 0.5,
+              whiteSpace: 'nowrap',
               '&.Mui-selected': {
                 backgroundColor: 'rgba(33,150,243,0.2)',
                 color: '#2196F3',
@@ -130,12 +150,6 @@ const DayPopup = ({ open, dateKey, dayEntry, dailyOfficeAmount, onClose, onWorkT
               {workLabel}
             </Typography>
           </Box>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Typography variant="body2" color="text.secondary">צבירה יומית</Typography>
-            <Typography variant="body2" fontWeight={600} color="primary.main">
-              ₪{accumulation}
-            </Typography>
-          </Box>
 
           <Divider sx={{ my: 0.5 }} />
 
@@ -145,7 +159,7 @@ const DayPopup = ({ open, dateKey, dayEntry, dailyOfficeAmount, onClose, onWorkT
             {withdrawal > 0 ? (
               <Chip
                 icon={<MonetizationOnIcon sx={{ fontSize: '14px !important' }} />}
-                label={`₪${withdrawal} נמשך`}
+                label={`₪${withdrawal} נמשכו`}
                 size="small"
                 sx={{
                   backgroundColor: 'rgba(255,152,0,0.18)',

@@ -102,7 +102,7 @@ const CalendarGrid = ({
               : '2px solid transparent',
             backgroundColor: workType
               ? workType === WORK_TYPES.OFFICE
-                ? 'rgba(33, 150, 243, 0.15)'
+                ? 'rgba(33, 156, 243, 0.15)'
                 : 'rgba(92, 184, 92, 0.12)'
               : 'transparent',
             transition: 'all 0.18s ease',
@@ -140,8 +140,8 @@ const CalendarGrid = ({
               fontWeight: isToday ? 700 : workType ? 600 : 400,
               color: workType
                 ? workType === WORK_TYPES.OFFICE
-                  ? '#90CAF9'
-                  : '#81C784'
+                  ? '#2196F3'
+                  : '#5CB85C'
                 : isToday
                 ? theme.palette.primary.main
                 : 'text.primary',

@@ -130,10 +130,24 @@ const InstructionsPopup = ({ open, onClose }) => {
           {/* Section 7 */}
           <Box sx={{ backgroundColor: 'success.lighter', p: 1.5, borderRadius: 1 }}>
             <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5 }}>
-              📱 טיפ: לשימוש כאפליקציה
+              📱 טיפ: לשימוש האתר כאפליקציה במכשיר
             </Typography>
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              באנדרואיד: לוחצים על "הורידו לעמוד הבית" כדי להפוך את האתר לאפליקציה במכשיר
+              באנדרואיד: לוחצים על "התקנה וקיצור דרך" ואז על "התקנה"
+            </Typography>
+            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+              באייפון : לוחצים על "שיתוף" ואז לוחצים "הוספה למסך הבית"
+            </Typography>
+
+          </Box>
+
+          {/* Section 8 */}
+          <Box sx={{ backgroundColor: 'warning.lighter', p: 1.5, borderRadius: 1 }}>
+            <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5 }}>
+              🔔 התראות יתרה
+            </Typography>
+            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+              ניתן להפעיל התראה מקומית כשהיתרה עוברת את הסף שהגדרתם ב"הגדרות".
             </Typography>
           </Box>
         </Box>

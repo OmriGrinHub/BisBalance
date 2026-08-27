@@ -17,6 +17,7 @@ import BusinessIcon from '@mui/icons-material/Business';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 import SummaryCard from '../components/SummaryCard';
+import MonthSelector from '../components/MonthSelector';
 import { getMonthDays, calculateMonthStats } from '../utils/calculations';
 import { WORK_TYPES } from '../models/types';
 import dayjs from 'dayjs';
@@ -30,7 +31,7 @@ const MONTH_NAMES_HE = [
  * List page — shows all days of the current month in a tabular format
  * with running balance and summary cards.
  */
-const ListPage = ({ days, settings, currentMonth }) => {
+const ListPage = ({ days, settings, currentMonth, onPrevMonth, onNextMonth }) => {
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
   const { year, month } = currentMonth;
@@ -52,20 +53,15 @@ const ListPage = ({ days, settings, currentMonth }) => {
         </Toolbar>
       </AppBar>
 
-      {/* Month label */}
-      <Box sx={{ width: '100%', pt: 1.5, pb: 0.5, textAlign: 'center' }}>
-        <Typography variant="body2" color="text.secondary" fontWeight={500}>
-          {MONTH_NAMES_HE[month]} {year}
-        </Typography>
-      </Box>
+      <MonthSelector year={year} month={month} onPrev={onPrevMonth} onNext={onNextMonth} />
 
       {/* Scrollable table */}
       <Box sx={{ flex: 1, overflowY: 'auto', px: 1, pt: 0.5 }}>
         <TableContainer
           sx={{
-            borderRadius: 3,
+            borderRadius: 1.5,
             backgroundColor: 'background.paper',
-            boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
+            boxShadow: '0 5px 6px rgba(0,0,0,0.3)',
             mb: 2,
           }}
         >

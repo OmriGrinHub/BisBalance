@@ -103,6 +103,29 @@ const useAppState = () => {
     }));
   }, []);
 
+  /**
+   * Update the balance notification toggle.
+   */
+  const setBalanceNotificationsEnabled = useCallback((enabled) => {
+    setState((prev) => ({
+      ...prev,
+      settings: { ...prev.settings, balanceNotificationsEnabled: enabled },
+    }));
+  }, []);
+
+  /**
+   * Update the balance notification threshold.
+   */
+  const setBalanceNotificationThreshold = useCallback((threshold) => {
+    const num = parseFloat(threshold);
+    if (!isNaN(num) && num >= 0) {
+      setState((prev) => ({
+        ...prev,
+        settings: { ...prev.settings, balanceNotificationThreshold: num },
+      }));
+    }
+  }, []);
+
   return {
     days: state.days,
     settings: state.settings,
@@ -111,6 +134,8 @@ const useAppState = () => {
     recordWithdrawal,
     updateDailyAmount,
     toggleDarkMode,
+    setBalanceNotificationsEnabled,
+    setBalanceNotificationThreshold,
     goToPrevMonth,
     goToNextMonth,
   };
